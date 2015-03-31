@@ -89,7 +89,21 @@ int main(int argc, char** argv) {
             if (strcmp(*(argv + 1), "-v") == 0) { //si el parametro es "-v" muestra integrantes y fecha compilacion
                 ImprimirIntegrantes();
             } else if (strcmp(*(argv + 1), "-g") == 0) { //si el parametro es "-g" realiza sorteo de Qno
-                srand(time(NULL));
+                //cuenta la cantidad de lineas del archivo.csv
+                ifstream flujo("qno.csv");
+                string str;
+                int count = 0;
+                char c = flujo.get();
+                while (flujo.good()) {
+                    if (c == '\n')count++;
+                    str.append(&c);
+                    c = flujo.get();
+                }
+                flujo.close();
+                
+                
+                //usa para establecer la raiz la fecha y hora actuales ademas de la cantidad de sorteos en el archivo
+                srand(time(NULL) + count);
                 int sorteo[14];
                 int i = 0;
                 while (i < 14) {
